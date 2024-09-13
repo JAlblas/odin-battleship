@@ -21,9 +21,18 @@ describe("Gameboard class", () => {
     gameboard.placeShip(3, "horizontal", [5, 5]);
     gameboard.placeShip(5, "vertical", [2, 3]);
     gameboard.placeShip(2, "vertical", [5, 3]);
-    gameboard.placeShip(3, "horizontal", [10, 2]);
+    gameboard.placeShip(3, "horizontal", [1, 2]);
     expect(gameboard.board.flat().filter((cell) => cell != null).length).toBe(
-      10,
+      11,
     );
+  });
+
+  test("receiveAttack", () => {
+    const gameboard = new Gameboard(10);
+    gameboard.placeShip(3, "horizontal", [5, 5]);
+    gameboard.placeShip(5, "vertical", [2, 3]);
+    gameboard.placeShip(2, "vertical", [5, 3]);
+    gameboard.placeShip(3, "horizontal", [1, 2]);
+    expect(gameboard.receiveAttack([2, 3])).toBeTruthy();
   });
 });
