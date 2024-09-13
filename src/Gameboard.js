@@ -1,3 +1,5 @@
+const Ship = require("./Ship");
+
 class Gameboard {
   constructor(size) {
     this.size = size;
@@ -8,32 +10,67 @@ class Gameboard {
     this.missedAttacks = [];
   }
 
-  placeShip(shipSize, shipDirection, startCoord) {
+  canPlaceShip(shipSize, shipDirection, startCoord) {
     const [startX, startY] = startCoord;
 
-    console.log(startX, startY);
-    if (shipDirection == "horizontal") {
-      // Loop here
-      for (let index = startX; index < startX + shipSize; index++) {
-        console.log("TRRR", index);
-        console.log("TRRR", this.size);
-        if (index >= this.size) {
-          console.log("OOH NOES X");
+    // Ensure the coordinates are within bounds before attempting to place
+    if (shipDirection === "horizontal") {
+      if (startX + shipSize > this.size) {
+        console.log("Ship out of bounds horizontally");
+        return false;
+      }
+
+      // Place the ship horizontally
+      for (let xCoord = startX; xCoord < startX + shipSize; xCoord++) {
+        console.log("Checking horizontally at", xCoord, startY);
+        // Check if space is already occupied
+        if (this.board[xCoord][startY] !== null) {
+          console.log("Space already occupied");
           return false;
         }
       }
-      return true;
-    } else if (shipDirection == "vertical") {
-      // Loop here
-      for (let index = startY; index < startY + shipSize; index++) {
-        console.log(index);
-        if (index >= this.size) {
-          console.log("OOH NOES Y");
+    } else if (shipDirection === "vertical") {
+      if (startY + shipSize > this.size) {
+        console.log("Ship out of bounds vertically");
+        return false;
+      }
+
+      // Place the ship vertically
+      for (let yCoord = startY; yCoord < startY + shipSize; yCoord++) {
+        console.log("Checking vertically at", startX, yCoord);
+        // Check if place is already occupied
+        if (this.board[startX][yCoord] !== null) {
+          console.log("Space already occupied");
           return false;
         }
       }
-      return true;
     }
+
+    // If we make it this far, the ship can be placed
+    return true;
+  }
+
+  placeShip(shipSize, shipDirection, startCoord) {
+    if (!this.canPlaceShip(shipSize, shipDirection, startCoord)) {
+      return false; // Ship cannot be placed
+    }
+
+    const ship = new Ship(shipSize);
+    const [startX, startY] = startCoord;
+
+    if (shipDirection === "horizontal") {
+      for (let xCoord = startX; xCoord < startX + shipSize; xCoord++) {
+        this.board[startY][xCoord] = ship;
+        console.log("Placed horizontally at", xCoord, startY);
+      }
+    } else if (shipDirection === "vertical") {
+      for (let yCoord = startY; yCoord < startY + shipSize; yCoord++) {
+        this.board[yCoord][startX] = ship;
+        console.log("Placed vertically at", startX, yCoord);
+      }
+    }
+    console.log(this.board);
+    return true;
   }
 
   receiveAttack() {}
