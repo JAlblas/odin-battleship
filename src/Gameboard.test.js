@@ -27,12 +27,21 @@ describe("Gameboard class", () => {
     );
   });
 
-  test("receiveAttack", () => {
+  test("receiveAttack hit", () => {
     const gameboard = new Gameboard(10);
     gameboard.placeShip(3, "horizontal", [5, 5]);
     gameboard.placeShip(5, "vertical", [2, 3]);
     gameboard.placeShip(2, "vertical", [5, 3]);
     gameboard.placeShip(3, "horizontal", [1, 2]);
     expect(gameboard.receiveAttack([2, 3])).toBeTruthy();
+  });
+
+  test("receiveAttack miss", () => {
+    const gameboard = new Gameboard(10);
+    gameboard.placeShip(3, "horizontal", [5, 5]);
+    gameboard.placeShip(5, "vertical", [2, 3]);
+    gameboard.placeShip(2, "vertical", [5, 3]);
+    gameboard.placeShip(3, "horizontal", [1, 2]);
+    expect(gameboard.receiveAttack([9, 9])).toBeFalsy();
   });
 });

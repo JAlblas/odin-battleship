@@ -83,16 +83,19 @@ class Gameboard {
       throw new Error("Coordinates out of bounds");
     }
 
-    console.log(x, y);
-    console.log(this.board);
-    console.log(this.board[x][y]); // x for row, y for column
-
     if (this.board[x][y] != null) {
-      // x for row, y for column
-      console.log("HIT");
-      return true;
+      if (typeof this.board[x][y] === "object") {
+        const ship = this.board[x][y];
+        ship.hit();
+        this.board[x][y] = "hit";
+        return true;
+      } else {
+        // This should not happens as UI does not allow hitting previously targeted cells
+        throw Error("Object hit but no ship");
+      }
     } else {
-      console.log("MISS");
+      this.board[x][y] = "miss";
+      this.missedAttacks.push([x, y]);
       return false;
     }
   }
