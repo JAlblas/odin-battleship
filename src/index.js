@@ -14,3 +14,4 @@ console.log(gameboard.receiveAttack([5, 3]));
 console.log(gameboard.receiveAttack([6, 3]));
 console.log(gameboard.receiveAttack([7, 3]));
 console.log(gameboard.board);
+console.log(gameboard.isGameOver());

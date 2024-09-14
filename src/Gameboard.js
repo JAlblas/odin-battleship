@@ -8,6 +8,7 @@ class Gameboard {
       .map(() => Array(size).fill(null));
 
     this.missedAttacks = [];
+    this.ships = [];
   }
 
   canPlaceShip(shipSize, shipDirection, startCoord) {
@@ -71,7 +72,7 @@ class Gameboard {
         console.log("Placed vertically at", xCoord, startY);
       }
     }
-    console.log(this.board);
+    this.ships.push(ship);
     return true;
   }
 
@@ -102,6 +103,9 @@ class Gameboard {
 
   isGameOver() {
     // Implement the logic for game over
+    const allSunk = this.ships.every((ship) => ship.isSunk());
+    console.log(allSunk ? "All ships sunk" : "Not all ships sunk");
+    return allSunk;
   }
 }
 
