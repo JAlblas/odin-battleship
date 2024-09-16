@@ -1,4 +1,6 @@
 import Gameboard from "./Gameboard";
+import Player from "./Player";
+import ViewController from "./ViewController";
 
 import "./style.css";
 
@@ -15,3 +17,9 @@ console.log(gameboard.receiveAttack([6, 3]));
 console.log(gameboard.receiveAttack([7, 3]));
 console.log(gameboard.board);
 console.log(gameboard.isGameOver());
+
+const player = new Player("player", gameboard);
+
+const viewController = new ViewController();
+viewController.setupUI();
+viewController.updateBoard();

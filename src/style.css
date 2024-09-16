@@ -1,4 +1,76 @@
+:root {
+  --bg-color: #00283e;
+}
+
 html {
-  background-color: brown;
   color: #fff;
+  font-family: "Protest Guerrilla", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f516d;
+}
+#container {
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#controls {
+  background-color: var(--bg-color);
+  border-radius: 10px; /* More rounded corners */
+  padding-top: 10px;
+  margin-bottom: 5px;
+  height: 150px;
+}
+
+#controls h1 {
+  margin-top: 15px;
+  font-size: 2.5em;
+}
+
+button {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 5px;
+  cursor: pointer;
+  font-family: "Protest Guerrilla", sans-serif;
+}
+
+#boards {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+  border: 1px solid #1e3a5f; /* Dark navy blue */
+  border-radius: 8px; /* Rounded corners */
+  padding: 15px;
+  background-color: #00283e;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-rows: repeat(10, 44px);
+  grid-template-columns: repeat(10, 44px);
+  grid-gap: 3px;
+  margin: auto;
+}
+
+.cell {
+  background-color: #9fc6d4;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+.cell:hover {
+  cursor: pointer;
+  background-color: #e6e6e6;
+}
+
+cell.ship {
+  background-color: aqua;
 }
