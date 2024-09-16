@@ -21,6 +21,7 @@ body {
 #controls {
   background-color: var(--bg-color);
   border-radius: 10px; /* More rounded corners */
+  margin-top: 25px;
   padding-top: 10px;
   margin-bottom: 5px;
   height: 150px;
@@ -39,6 +40,7 @@ button {
   padding: 5px 5px;
   cursor: pointer;
   font-family: "Protest Guerrilla", sans-serif;
+  font-size: 1.2em;
 }
 
 #boards {
@@ -50,6 +52,7 @@ button {
   border-radius: 8px; /* Rounded corners */
   padding: 15px;
   background-color: #00283e;
+  margin-bottom: 5px;
 }
 
 .gameboard {
@@ -73,4 +76,10 @@ button {
 
 cell.ship {
   background-color: aqua;
+}
+
+#footer {
+  background-color: var(--bg-color);
+  height: 50px;
+  padding: 10px;
 }
