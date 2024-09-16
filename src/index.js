@@ -20,6 +20,8 @@ console.log(gameboard.isGameOver());
 
 const player = new Player("player", gameboard);
 
-const viewController = new ViewController();
+const computerBoard = new Gameboard(10);
+
+const viewController = new ViewController(computerBoard, gameboard);
 viewController.setupUI();
 viewController.updateBoard();

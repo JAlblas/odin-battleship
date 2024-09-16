@@ -11,6 +11,10 @@ class Gameboard {
     this.ships = [];
   }
 
+  getBoard() {
+    return this.board;
+  }
+
   canPlaceShip(shipSize, shipDirection, startCoord) {
     const [startX, startY] = startCoord;
 
