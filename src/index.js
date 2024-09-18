@@ -15,6 +15,7 @@ console.log(gameboard.receiveAttack([4, 3]));
 console.log(gameboard.receiveAttack([5, 3]));
 console.log(gameboard.receiveAttack([6, 3]));
 console.log(gameboard.receiveAttack([7, 3]));
+gameboard.placeShip(3, "vertical", [0, 9]);
 console.log(gameboard.board);
 console.log(gameboard.isGameOver());
 
@@ -24,4 +25,3 @@ const computerBoard = new Gameboard(10);
 
 const viewController = new ViewController(computerBoard, gameboard);
 viewController.setupUI();
-viewController.updateBoard();

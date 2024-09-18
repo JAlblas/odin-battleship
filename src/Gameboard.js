@@ -20,7 +20,7 @@ class Gameboard {
 
     // Ensure the coordinates are within bounds before attempting to place
     if (shipDirection === "horizontal") {
-      if (startX + shipSize > this.size) {
+      if (startY + shipSize >= this.size || startX >= this.size) {
         // Check if ship would go out of bounds horizontally
         console.log("Ship out of bounds horizontally");
         return false;
@@ -37,7 +37,7 @@ class Gameboard {
         }
       }
     } else if (shipDirection === "vertical") {
-      if (startY + shipSize > this.size) {
+      if (startX + shipSize >= this.size || startY >= this.size) {
         // Check if ship would go out of bounds vertically
         console.log("Ship out of bounds vertically");
         return false;
@@ -59,6 +59,7 @@ class Gameboard {
 
   placeShip(shipSize, shipDirection, startCoord) {
     if (!this.canPlaceShip(shipSize, shipDirection, startCoord)) {
+      console.log("ship can't be placed", shipSize, startCoord);
       return false; // Ship cannot be placed
     }
 

@@ -25,28 +25,20 @@ class ViewController {
 
   updateBoard(boardModel, boardUI) {
     boardUI.innerHTML = "";
-    /*
-    for (let j = 0; j < 100; j++) {
-      const computerCell = document.createElement("div");
-      computerCell.className = "cell";
-      computerCell.dataset.id = j;
-      this.computerBoard.appendChild(computerCell);
 
-      const playerCell = document.createElement("div");
-      playerCell.className = "cell";
-      computerCell.dataset.id = j;
-      this.playerBoard.appendChild(playerCell);
-    }
-      */
     console.log(boardModel);
     boardModel.board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
-        console.log(cell);
-
         const playerCell = document.createElement("div");
         playerCell.className = "cell";
         playerCell.dataset.row = rowIndex;
         playerCell.dataset.column = cellIndex;
+
+        if (cell != null) {
+          playerCell.innerHTML = "S";
+        } else {
+          playerCell.innerHTML = "";
+        }
         boardUI.appendChild(playerCell);
       });
     });
