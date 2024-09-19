@@ -1,7 +1,7 @@
 const Ship = require("./Ship");
 
 class Gameboard {
-  constructor(size) {
+  constructor(size, playerType) {
     this.size = size;
     this.board = Array(size) // size is used here instead of fixed 10
       .fill(null)
@@ -9,6 +9,7 @@ class Gameboard {
 
     this.missedAttacks = [];
     this.ships = [];
+    this.playerType = playerType;
   }
 
   getBoard() {

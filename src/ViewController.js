@@ -35,9 +35,24 @@ class ViewController {
         playerCell.dataset.column = cellIndex;
 
         if (cell != null) {
-          playerCell.innerHTML = "S";
+          console.log(cell);
+          if (cell == "miss") {
+            playerCell.innerHTML = "Miss";
+          } else {
+            playerCell.innerHTML = "S";
+          }
         } else {
           playerCell.innerHTML = "";
+        }
+
+        if (boardModel.playerType === "pc") {
+          playerCell.addEventListener("click", (e) => {
+            const row = playerCell.dataset.row;
+            const column = playerCell.dataset.column;
+            console.log(row, column);
+            boardModel.receiveAttack([row, column]);
+            this.updateBoard(boardModel, boardUI);
+          });
         }
         boardUI.appendChild(playerCell);
       });
