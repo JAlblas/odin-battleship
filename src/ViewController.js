@@ -37,9 +37,13 @@ class ViewController {
         if (cell != null) {
           console.log(cell);
           if (cell == "miss") {
-            playerCell.innerHTML = "Miss";
+            playerCell.innerHTML = "X";
+          } else if (cell == "hit") {
+            playerCell.innerHTML = "Hit";
           } else {
-            playerCell.innerHTML = "S";
+            if (boardModel.playerType == "player") {
+              playerCell.innerHTML = "S";
+            }
           }
         } else {
           playerCell.innerHTML = "";
@@ -51,6 +55,15 @@ class ViewController {
             const column = playerCell.dataset.column;
             console.log(row, column);
             boardModel.receiveAttack([row, column]);
+
+            if (boardModel.isGameOver()) {
+              alert("DONE!");
+              // Restart game
+              this.computerBoardModel.resetBoard();
+              this.playerBoardModel.resetBoard();
+              this.updateBoard(this.computerBoardModel, this.computerBoard);
+              this.updateBoard(this.playerBoardModel, this.playerBoard);
+            }
             this.updateBoard(boardModel, boardUI);
           });
         }

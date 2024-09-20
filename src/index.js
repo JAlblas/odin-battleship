@@ -22,6 +22,7 @@ console.log(gameboard.isGameOver());
 const player = new Player("player", gameboard);
 
 const computerBoard = new Gameboard(10, "pc");
+computerBoard.placeShip(3, "horizontal", [5, 5]);
 
 const viewController = new ViewController(computerBoard, gameboard);
 viewController.setupUI();

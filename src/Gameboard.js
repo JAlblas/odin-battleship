@@ -113,6 +113,15 @@ class Gameboard {
     console.log(allSunk ? "All ships sunk" : "Not all ships sunk");
     return allSunk;
   }
+
+  resetBoard() {
+    this.board = Array(this.size) // size is used here instead of fixed 10
+      .fill(null)
+      .map(() => Array(this.size).fill(null));
+
+    this.missedAttacks = [];
+    this.ships = [];
+  }
 }
 
 module.exports = Gameboard;
