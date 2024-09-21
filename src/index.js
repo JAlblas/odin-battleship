@@ -20,6 +20,8 @@ console.log(gameboard.board);
 console.log(gameboard.isGameOver());
 
 const player = new Player("player", gameboard);
+Player.setCurrentPlayer(player);
+console.log("CURRENT PLAYER: ", Player.getCurrentPlayer());
 
 const computerBoard = new Gameboard(10, "pc");
 computerBoard.placeShip(3, "horizontal", [5, 5]);

@@ -91,26 +91,26 @@ class Gameboard {
     }
 
     if (this.board[x][y] != null) {
-      if (typeof this.board[x][y] === "object") {
+      if (this.board[x][y] instanceof Ship) {
         const ship = this.board[x][y];
         ship.hit();
         this.board[x][y] = "hit";
         return true;
       } else {
-        // This should not happens as UI does not allow hitting previously targeted cells
-        throw Error("Object hit but no ship");
+        this.board[x][y] = "miss";
+        this.missedAttacks.push([x, y]);
+        return false;
       }
     } else {
       this.board[x][y] = "miss";
       this.missedAttacks.push([x, y]);
-      return false;
+      return true;
     }
   }
 
   isGameOver() {
     // Implement the logic for game over
     const allSunk = this.ships.every((ship) => ship.isSunk());
-    console.log(allSunk ? "All ships sunk" : "Not all ships sunk");
     return allSunk;
   }
 

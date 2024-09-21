@@ -1,3 +1,5 @@
+import Player from "./Player";
+
 class ViewController {
   constructor(computerBoardModel, playerBoardModel) {
     // You could initialize some variables here if needed
@@ -54,7 +56,10 @@ class ViewController {
             const row = playerCell.dataset.row;
             const column = playerCell.dataset.column;
             console.log(row, column);
-            boardModel.receiveAttack([row, column]);
+            if (boardModel.receiveAttack([row, column])) {
+              console.log("valid attack");
+              Player.togglePlayer();
+            }
 
             if (boardModel.isGameOver()) {
               alert("DONE!");

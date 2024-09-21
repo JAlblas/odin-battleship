@@ -4,8 +4,20 @@ class Player {
     this.board = board;
   }
 
+  static players = ["player", "pc"];
+
   // Static property to hold the current player
   static currentPlayer = null;
+
+  static togglePlayer() {
+    const currentIndex = this.players.indexOf(this.currentPlayer);
+    if (currentIndex == 0) {
+      this.currentPlayer = this.players[1];
+    } else {
+      this.currentPlayer = this.players[0];
+    }
+    console.log(this.currentPlayer);
+  }
 
   // Static method to set the current player
   static setCurrentPlayer(player) {
