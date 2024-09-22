@@ -104,7 +104,7 @@ class Gameboard {
     } else {
       this.board[x][y] = "miss";
       this.missedAttacks.push([x, y]);
-      return true;
+      return false;
     }
   }
 
@@ -115,7 +115,7 @@ class Gameboard {
   }
 
   resetBoard() {
-    this.board = Array(this.size) // size is used here instead of fixed 10
+    this.board = Array(this.size)
       .fill(null)
       .map(() => Array(this.size).fill(null));
 

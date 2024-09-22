@@ -60,4 +60,18 @@ describe("Gameboard class", () => {
     gameboard.receiveAttack([6, 5]);
     expect(gameboard.isGameOver()).toBeFalsy();
   });
+
+  test("resetting board", () => {
+    const gameboard = new Gameboard(10);
+    gameboard.placeShip(3, "horizontal", [5, 5]);
+    gameboard.placeShip(5, "vertical", [2, 3]);
+    gameboard.placeShip(2, "vertical", [5, 3]);
+    gameboard.placeShip(3, "horizontal", [1, 2]);
+    gameboard.receiveAttack([2, 3]);
+    gameboard.resetBoard();
+    expect(gameboard.board.flat().filter((cell) => cell != null).length).toBe(
+      0,
+    );
+    expect(gameboard.missedAttacks.length).toBe(0);
+  });
 });
