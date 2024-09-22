@@ -4,10 +4,18 @@ class Player {
     this.board = board;
   }
 
-  static players = ["player", "pc"];
+  static players = [];
 
   // Static property to hold the current player
   static currentPlayer = null;
+
+  static setPlayers(players) {
+    this.players = players;
+  }
+
+  static setCurrentPlayer(player) {
+    this.currentPlayer = player;
+  }
 
   static togglePlayer() {
     const currentIndex = this.players.indexOf(this.currentPlayer);
@@ -19,14 +27,8 @@ class Player {
     console.log(this.currentPlayer);
   }
 
-  // Static method to set the current player
-  static setCurrentPlayer(player) {
-    Player.currentPlayer = player;
-  }
-
-  // Static method to get the current player
-  static getCurrentPlayer() {
-    return Player.currentPlayer;
+  placeShips(ships) {
+    this.board.randomlyPlaceShips(ships);
   }
 }
 

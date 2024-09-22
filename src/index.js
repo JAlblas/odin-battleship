@@ -1,10 +1,12 @@
 import Gameboard from "./Gameboard";
 import Player from "./Player";
+import Ship from "./Ship";
 import ViewController from "./ViewController";
 
 import "./style.css";
 
-const gameboard = new Gameboard(10, "human");
+const playerBoard = new Gameboard(10, "human");
+/* 
 gameboard.placeShip(3, "horizontal", [5, 5]);
 gameboard.placeShip(5, "vertical", [2, 3]);
 gameboard.placeShip(2, "vertical", [5, 3]);
@@ -16,15 +18,19 @@ console.log(gameboard.receiveAttack([5, 3]));
 console.log(gameboard.receiveAttack([6, 3]));
 console.log(gameboard.receiveAttack([7, 3]));
 gameboard.placeShip(3, "vertical", [0, 9]);
-console.log(gameboard.board);
-console.log(gameboard.isGameOver());
-
-const player = new Player("player", gameboard);
-Player.setCurrentPlayer(player);
-console.log("CURRENT PLAYER: ", Player.getCurrentPlayer());
+*/
+const player = new Player("player", playerBoard);
 
 const computerBoard = new Gameboard(10, "pc");
-computerBoard.placeShip(3, "horizontal", [5, 5]);
+//computerBoard.placeShip(3, "horizontal", [5, 5]);
+const pc = new Player("pc", computerBoard);
 
-const viewController = new ViewController(computerBoard, gameboard);
+Player.setPlayers([player, pc]);
+Player.setCurrentPlayer(player);
+
+// Place ships
+playerBoard.randomlyPlaceShips([new Ship(4)]);
+computerBoard.randomlyPlaceShips([new Ship(4)]);
+
+const viewController = new ViewController(computerBoard, playerBoard);
 viewController.setupUI();

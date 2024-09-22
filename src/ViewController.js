@@ -27,8 +27,6 @@ class ViewController {
 
   updateBoard(boardModel, boardUI) {
     boardUI.innerHTML = "";
-
-    console.log(boardModel);
     boardModel.board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
         const playerCell = document.createElement("div");
@@ -37,7 +35,6 @@ class ViewController {
         playerCell.dataset.column = cellIndex;
 
         if (cell != null) {
-          console.log(cell);
           if (cell == "miss") {
             playerCell.innerHTML = "X";
           } else if (cell == "hit") {

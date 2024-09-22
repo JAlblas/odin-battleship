@@ -16,19 +16,19 @@ class Gameboard {
     return this.board;
   }
 
-  canPlaceShip(shipSize, shipDirection, startCoord) {
+  canPlaceShip(ship, shipDirection, startCoord) {
     const [startX, startY] = startCoord;
 
     // Ensure the coordinates are within bounds before attempting to place
     if (shipDirection === "horizontal") {
-      if (startY + shipSize >= this.size || startX >= this.size) {
+      if (startY + ship.size >= this.size || startX >= this.size) {
         // Check if ship would go out of bounds horizontally
         console.log("Ship out of bounds horizontally");
         return false;
       }
 
       // Check if space is free horizontally
-      for (let yCoord = startY; yCoord < startY + shipSize; yCoord++) {
+      for (let yCoord = startY; yCoord < startY + ship.size; yCoord++) {
         console.log("Checking horizontally at", startX, yCoord);
         // Check if space is already occupied
         if (this.board[startX][yCoord] !== null) {
@@ -38,14 +38,14 @@ class Gameboard {
         }
       }
     } else if (shipDirection === "vertical") {
-      if (startX + shipSize >= this.size || startY >= this.size) {
+      if (startX + ship.size >= this.size || startY >= this.size) {
         // Check if ship would go out of bounds vertically
         console.log("Ship out of bounds vertically");
         return false;
       }
 
       // Check if space is free vertically
-      for (let xCoord = startX; xCoord < startX + shipSize; xCoord++) {
+      for (let xCoord = startX; xCoord < startX + ship.size; xCoord++) {
         console.log("Checking vertically at", xCoord, startY);
         // Check if space is already occupied
         if (this.board[xCoord][startY] !== null) {
@@ -58,22 +58,21 @@ class Gameboard {
     return true; // Ship can be placed
   }
 
-  placeShip(shipSize, shipDirection, startCoord) {
-    if (!this.canPlaceShip(shipSize, shipDirection, startCoord)) {
-      console.log("ship can't be placed", shipSize, startCoord);
+  placeShip(ship, shipDirection, startCoord) {
+    if (!this.canPlaceShip(ship, shipDirection, startCoord)) {
+      console.log("ship can't be placed", ship.size, startCoord);
       return false; // Ship cannot be placed
     }
 
-    const ship = new Ship(shipSize);
     const [startX, startY] = startCoord;
 
     if (shipDirection === "horizontal") {
-      for (let yCoord = startY; yCoord < startY + shipSize; yCoord++) {
+      for (let yCoord = startY; yCoord < startY + ship.size; yCoord++) {
         this.board[startX][yCoord] = ship; // startX is the row, yCoord is the column
         console.log("Placed horizontally at", startX, yCoord);
       }
     } else if (shipDirection === "vertical") {
-      for (let xCoord = startX; xCoord < startX + shipSize; xCoord++) {
+      for (let xCoord = startX; xCoord < startX + ship.size; xCoord++) {
         this.board[xCoord][startY] = ship; // xCoord is the row, startY is the column
         console.log("Placed vertically at", xCoord, startY);
       }
@@ -108,8 +107,25 @@ class Gameboard {
     }
   }
 
+  randomlyPlaceShips(ships) {
+    for (let ship of ships) {
+      let placed = false;
+      while (!placed) {
+        let direction = Math.random() < 0.5 ? "horizontal" : "vertical";
+        let row = Math.floor(Math.random() * this.board.length);
+        let column = Math.floor(Math.random() * this.board[0].length);
+
+        if (this.canPlaceShip([row, column], ship, direction)) {
+          this.placeShip(ship, direction, [row, column]);
+          placed = true;
+        }
+      }
+    }
+  }
+
   isGameOver() {
     // Implement the logic for game over
+    console.log(this.ships);
     const allSunk = this.ships.every((ship) => ship.isSunk());
     return allSunk;
   }
