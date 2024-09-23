@@ -1,7 +1,7 @@
 import Gameboard from "./Gameboard";
 import Player from "./Player";
 import Ship from "./Ship";
-import ViewController from "./ViewController";
+import ViewController from "./viewController";
 
 import "./style.css";
 
@@ -29,8 +29,22 @@ Player.setPlayers([player, pc]);
 Player.setCurrentPlayer(player);
 
 // Place ships
-playerBoard.randomlyPlaceShips([new Ship(4)]);
-computerBoard.randomlyPlaceShips([new Ship(4)]);
+playerBoard.randomlyPlaceShips([
+  new Ship(5),
+  new Ship(4),
+  new Ship(3),
+  new Ship(3),
+  new Ship(2),
+  new Ship(2),
+]);
+computerBoard.randomlyPlaceShips([
+  new Ship(5),
+  new Ship(4),
+  new Ship(3),
+  new Ship(3),
+  new Ship(2),
+  new Ship(2),
+]);
 
 const viewController = new ViewController(computerBoard, playerBoard);
 viewController.setupUI();

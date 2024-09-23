@@ -21,7 +21,7 @@ class Gameboard {
 
     // Ensure the coordinates are within bounds before attempting to place
     if (shipDirection === "horizontal") {
-      if (startY + ship.size >= this.size || startX >= this.size) {
+      if (startY + ship.size > this.size || startX >= this.size) {
         // Check if ship would go out of bounds horizontally
         console.log("Ship out of bounds horizontally");
         return false;
@@ -29,16 +29,14 @@ class Gameboard {
 
       // Check if space is free horizontally
       for (let yCoord = startY; yCoord < startY + ship.size; yCoord++) {
-        console.log("Checking horizontally at", startX, yCoord);
         // Check if space is already occupied
         if (this.board[startX][yCoord] !== null) {
-          // startX is the row, yCoord is the column
           console.log("Space already occupied");
           return false;
         }
       }
     } else if (shipDirection === "vertical") {
-      if (startX + ship.size >= this.size || startY >= this.size) {
+      if (startX + ship.size > this.size || startY >= this.size) {
         // Check if ship would go out of bounds vertically
         console.log("Ship out of bounds vertically");
         return false;
@@ -46,16 +44,19 @@ class Gameboard {
 
       // Check if space is free vertically
       for (let xCoord = startX; xCoord < startX + ship.size; xCoord++) {
-        console.log("Checking vertically at", xCoord, startY);
         // Check if space is already occupied
         if (this.board[xCoord][startY] !== null) {
-          // xCoord is the row, startY is the column
           console.log("Space already occupied");
           return false;
         }
       }
+    } else {
+      console.log("Invalid direction");
+      return false; // Invalid direction
     }
-    return true; // Ship can be placed
+
+    // If all checks passed, return true
+    return true;
   }
 
   placeShip(ship, shipDirection, startCoord) {
@@ -95,6 +96,8 @@ class Gameboard {
         ship.hit();
         this.board[x][y] = "hit";
         return true;
+      } else if (this.board[x][y] == "hit") {
+        return false;
       } else {
         this.board[x][y] = "miss";
         this.missedAttacks.push([x, y]);
@@ -110,15 +113,29 @@ class Gameboard {
   randomlyPlaceShips(ships) {
     for (let ship of ships) {
       let placed = false;
-      while (!placed) {
+      let attempts = 0;
+      const maxAttempts = 100; // Limit attempts
+
+      while (!placed && attempts < maxAttempts) {
         let direction = Math.random() < 0.5 ? "horizontal" : "vertical";
         let row = Math.floor(Math.random() * this.board.length);
         let column = Math.floor(Math.random() * this.board[0].length);
 
-        if (this.canPlaceShip([row, column], ship, direction)) {
+        if (this.canPlaceShip(ship, direction, [row, column])) {
+          console.log("can place ship", ship, [row, column]);
           this.placeShip(ship, direction, [row, column]);
           placed = true;
+        } else {
+          console.log("Try again!");
+          console.log(direction, row, column);
         }
+        attempts++;
+      }
+
+      if (!placed) {
+        console.log(
+          `Failed to place ship of size ${ship.size} after ${maxAttempts} attempts`,
+        );
       }
     }
   }
@@ -137,6 +154,15 @@ class Gameboard {
 
     this.missedAttacks = [];
     this.ships = [];
+
+    this.randomlyPlaceShips([
+      new Ship(5),
+      new Ship(4),
+      new Ship(3),
+      new Ship(3),
+      new Ship(2),
+      new Ship(2),
+    ]);
   }
 }
 
