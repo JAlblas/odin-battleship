@@ -67,6 +67,11 @@ class ViewController {
               this.updateBoard(this.playerBoardModel, this.playerBoard);
             }
             this.updateBoard(boardModel, boardUI);
+
+            // Make PC Move
+            this.computerBoardModel.makeEnemyMove(this.playerBoardModel);
+
+            this.updateBoard(boardModel, boardUI);
           });
         }
         boardUI.appendChild(playerCell);

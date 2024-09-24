@@ -84,7 +84,7 @@ class Gameboard {
 
   receiveAttack(coord) {
     const [x, y] = coord;
-
+    console.log("Receiving attack at ", coord);
     // Check if the coordinates are within bounds
     if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[0].length) {
       throw new Error("Coordinates out of bounds");
@@ -138,6 +138,14 @@ class Gameboard {
         );
       }
     }
+  }
+
+  makeEnemyMove(playerBoard) {
+    console.log(playerBoard);
+    console.log("enemy shooting!");
+    let row = Math.floor(Math.random() * this.board.length);
+    let column = Math.floor(Math.random() * this.board[0].length);
+    playerBoard.receiveAttack([row, column]);
   }
 
   isGameOver() {
