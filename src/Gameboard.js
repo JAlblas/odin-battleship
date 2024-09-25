@@ -93,7 +93,12 @@ class Gameboard {
         ship.hit();
         this.board[x][y] = "hit";
         return true;
-      } else if (this.board[x][y] == "hit") {
+      } else if (
+        this.board[x][y] == "hit" ||
+        this.board[x][y] == "miss" ||
+        this.board[x][y] == "X"
+      ) {
+        console.log("INVALID SHOT");
         return false;
       } else {
         this.board[x][y] = "miss";
@@ -103,7 +108,7 @@ class Gameboard {
     } else {
       this.board[x][y] = "miss";
       this.missedAttacks.push([x, y]);
-      return false;
+      return true;
     }
   }
 

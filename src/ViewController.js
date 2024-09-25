@@ -57,6 +57,16 @@ class ViewController {
             if (boardModel.receiveAttack([row, column])) {
               console.log("valid attack");
               Player.togglePlayer();
+
+              setTimeout(
+                function () {
+                  // Make PC Move
+                  this.computerBoardModel.makeEnemyMove(this.playerBoardModel);
+                  this.updateBoard(this.playerBoardModel, this.playerBoard);
+                  Player.togglePlayer();
+                }.bind(this),
+                1000,
+              );
             }
 
             if (boardModel.isGameOver()) {
@@ -68,17 +78,6 @@ class ViewController {
               this.updateBoard(this.playerBoardModel, this.playerBoard);
             }
             this.updateBoard(boardModel, boardUI);
-
-            setTimeout(
-              function () {
-                // Make PC Move
-                this.computerBoardModel.makeEnemyMove(this.playerBoardModel);
-                console.log("BOARD PLAYER AFTER ATTACK:");
-                console.log(this.playerBoardModel.board);
-                this.updateBoard(this.playerBoardModel, this.playerBoard);
-              }.bind(this),
-              1000,
-            );
           });
         }
         boardUI.appendChild(playerCell);
