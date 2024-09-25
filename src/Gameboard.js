@@ -70,12 +70,10 @@ class Gameboard {
     if (shipDirection === "horizontal") {
       for (let yCoord = startY; yCoord < startY + ship.size; yCoord++) {
         this.board[startX][yCoord] = ship; // startX is the row, yCoord is the column
-        console.log("Placed horizontally at", startX, yCoord);
       }
     } else if (shipDirection === "vertical") {
       for (let xCoord = startX; xCoord < startX + ship.size; xCoord++) {
         this.board[xCoord][startY] = ship; // xCoord is the row, startY is the column
-        console.log("Placed vertically at", xCoord, startY);
       }
     }
     this.ships.push(ship);
@@ -84,7 +82,6 @@ class Gameboard {
 
   receiveAttack(coord) {
     const [x, y] = coord;
-    console.log("Receiving attack at ", coord);
     // Check if the coordinates are within bounds
     if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[0].length) {
       throw new Error("Coordinates out of bounds");
@@ -122,12 +119,8 @@ class Gameboard {
         let column = Math.floor(Math.random() * this.board[0].length);
 
         if (this.canPlaceShip(ship, direction, [row, column])) {
-          console.log("can place ship", ship, [row, column]);
           this.placeShip(ship, direction, [row, column]);
           placed = true;
-        } else {
-          console.log("Try again!");
-          console.log(direction, row, column);
         }
         attempts++;
       }

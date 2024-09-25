@@ -26,6 +26,7 @@ class ViewController {
   }
 
   updateBoard(boardModel, boardUI) {
+    console.log("UPDATING ", boardModel.playerType);
     boardUI.innerHTML = "";
     boardModel.board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
@@ -68,10 +69,16 @@ class ViewController {
             }
             this.updateBoard(boardModel, boardUI);
 
-            // Make PC Move
-            this.computerBoardModel.makeEnemyMove(this.playerBoardModel);
-
-            this.updateBoard(boardModel, boardUI);
+            setTimeout(
+              function () {
+                // Make PC Move
+                this.computerBoardModel.makeEnemyMove(this.playerBoardModel);
+                console.log("BOARD PLAYER AFTER ATTACK:");
+                console.log(this.playerBoardModel.board);
+                this.updateBoard(this.playerBoardModel, this.playerBoard);
+              }.bind(this),
+              1000,
+            );
           });
         }
         boardUI.appendChild(playerCell);
