@@ -109,7 +109,7 @@ class Gameboard {
       }
     } else {
       this.board[x][y] = "miss";
-      return true;
+      return false;
     }
   }
 
