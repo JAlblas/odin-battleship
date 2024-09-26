@@ -7,7 +7,7 @@ class Gameboard {
       .fill(null)
       .map(() => Array(size).fill(null));
 
-    this.missedAttacks = [];
+    this.attackedCells = [];
     this.ships = [];
     this.playerType = playerType;
   }
@@ -87,6 +87,8 @@ class Gameboard {
       throw new Error("Coordinates out of bounds");
     }
 
+    this.attackedCells.push([x, y]);
+
     if (this.board[x][y] != null) {
       if (this.board[x][y] instanceof Ship) {
         const ship = this.board[x][y];
@@ -107,7 +109,6 @@ class Gameboard {
       }
     } else {
       this.board[x][y] = "miss";
-      this.missedAttacks.push([x, y]);
       return true;
     }
   }
@@ -138,19 +139,33 @@ class Gameboard {
     }
   }
 
+  isMoveValid(cell) {
+    // Check if the move already exists in attackedCells
+    return !this.attackedCells.some(
+      (attack) => JSON.stringify(attack) === JSON.stringify(cell),
+    );
+  }
+
   makeEnemyMove(playerBoard) {
     console.log(playerBoard);
-    console.log("enemy shooting!");
-    let row = Math.floor(Math.random() * this.board.length);
-    let column = Math.floor(Math.random() * this.board[0].length);
+    console.log("Enemy shooting!");
+
+    let row, column;
+
+    // Keep trying to make move until valid move is found
+    do {
+      row = Math.floor(Math.random() * this.board.length);
+      column = Math.floor(Math.random() * this.board[0].length);
+    } while (!this.isMoveValid([row, column]));
+
+    // Once a valid move is found, make the attack
     playerBoard.receiveAttack([row, column]);
   }
 
   isGameOver() {
     // Implement the logic for game over
     console.log(this.ships);
-    const allSunk = this.ships.every((ship) => ship.isSunk());
-    return allSunk;
+    return this.ships.every((ship) => ship.isSunk());
   }
 
   resetBoard() {
@@ -158,7 +173,7 @@ class Gameboard {
       .fill(null)
       .map(() => Array(this.size).fill(null));
 
-    this.missedAttacks = [];
+    this.attackedCells = [];
     this.ships = [];
 
     this.randomlyPlaceShips([
