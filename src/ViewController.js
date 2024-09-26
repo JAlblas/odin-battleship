@@ -26,7 +26,6 @@ class ViewController {
   }
 
   updateBoard(boardModel, boardUI) {
-    console.log("UPDATING ", boardModel.playerType);
     boardUI.innerHTML = "";
     boardModel.board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
@@ -41,7 +40,7 @@ class ViewController {
           } else if (cell == "hit") {
             playerCell.innerHTML = "Hit";
           } else {
-            if (boardModel.playerType == "player") {
+            if (boardModel.playerType == "human") {
               playerCell.innerHTML = "S";
             }
           }
@@ -55,7 +54,6 @@ class ViewController {
             const column = playerCell.dataset.column;
             console.log(row, column);
             if (boardModel.receiveAttack([row, column])) {
-              console.log("valid attack");
               Player.togglePlayer();
 
               setTimeout(
