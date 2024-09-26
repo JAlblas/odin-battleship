@@ -15,7 +15,10 @@ class ViewController {
     this.startButton = document.querySelector("#start-button");
 
     this.startButton.addEventListener("click", () => {
-      console.log("restarting");
+      this.computerBoardModel.resetBoard();
+      this.playerBoardModel.resetBoard();
+      this.updateBoard(this.computerBoardModel, this.computerBoard);
+      this.updateBoard(this.playerBoardModel, this.playerBoard);
     });
 
     this.computerBoard = document.querySelector("#pc-board");
