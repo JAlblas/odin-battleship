@@ -1,4 +1,5 @@
 const Gameboard = require("./Gameboard.js");
+const Ship = require("./Ship");
 
 describe("Gameboard class", () => {
   test("gameboard complete", () => {
@@ -13,15 +14,15 @@ describe("Gameboard class", () => {
 
   test("invalid placement", () => {
     const gameboard = new Gameboard(10);
-    expect(gameboard.placeShip(5, "vertical", [6, 8])).toBeFalsy();
+    expect(gameboard.placeShip(new Ship(5), "vertical", [6, 8])).toBeFalsy();
   });
 
   test("placing multiple ships with collision", () => {
     const gameboard = new Gameboard(10);
-    gameboard.placeShip(3, "horizontal", [5, 5]);
-    gameboard.placeShip(5, "vertical", [2, 3]);
-    gameboard.placeShip(2, "vertical", [5, 3]);
-    gameboard.placeShip(3, "horizontal", [1, 2]);
+    gameboard.placeShip(new Ship(3), "horizontal", [5, 5]);
+    gameboard.placeShip(new Ship(5), "vertical", [2, 3]);
+    gameboard.placeShip(new Ship(2), "vertical", [5, 3]);
+    gameboard.placeShip(new Ship(3), "horizontal", [1, 2]);
     expect(gameboard.board.flat().filter((cell) => cell != null).length).toBe(
       11,
     );
@@ -29,25 +30,25 @@ describe("Gameboard class", () => {
 
   test("receiveAttack hit", () => {
     const gameboard = new Gameboard(10);
-    gameboard.placeShip(3, "horizontal", [5, 5]);
-    gameboard.placeShip(5, "vertical", [2, 3]);
-    gameboard.placeShip(2, "vertical", [5, 3]);
-    gameboard.placeShip(3, "horizontal", [1, 2]);
+    gameboard.placeShip(new Ship(3), "horizontal", [5, 5]);
+    gameboard.placeShip(new Ship(5), "vertical", [2, 3]);
+    gameboard.placeShip(new Ship(2), "vertical", [5, 3]);
+    gameboard.placeShip(new Ship(3), "horizontal", [1, 2]);
     expect(gameboard.receiveAttack([2, 3])).toBeTruthy();
   });
 
   test("receiveAttack miss", () => {
     const gameboard = new Gameboard(10);
-    gameboard.placeShip(3, "horizontal", [5, 5]);
-    gameboard.placeShip(5, "vertical", [2, 3]);
-    gameboard.placeShip(2, "vertical", [5, 3]);
-    gameboard.placeShip(3, "horizontal", [1, 2]);
-    expect(gameboard.receiveAttack([9, 9])).toBeFalsy();
+    gameboard.placeShip(new Ship(3), "horizontal", [5, 5]);
+    gameboard.placeShip(new Ship(5), "vertical", [2, 3]);
+    gameboard.placeShip(new Ship(2), "vertical", [5, 3]);
+    gameboard.placeShip(new Ship(3), "horizontal", [1, 2]);
+    expect(gameboard.receiveAttack([8, 8])).toBeFalsy();
   });
 
   test("all ships sunk", () => {
     const gameboard = new Gameboard(10);
-    gameboard.placeShip(3, "horizontal", [5, 5]);
+    gameboard.placeShip(new Ship(3), "horizontal", [5, 5]);
     gameboard.receiveAttack([5, 5]);
     gameboard.receiveAttack([5, 6]);
     gameboard.receiveAttack([5, 7]);
@@ -56,7 +57,7 @@ describe("Gameboard class", () => {
 
   test("all ships not sunk", () => {
     const gameboard = new Gameboard(10);
-    gameboard.placeShip(3, "horizontal", [5, 5]);
+    gameboard.placeShip(new Ship(3), "horizontal", [5, 5]);
     gameboard.receiveAttack([6, 5]);
     expect(gameboard.isGameOver()).toBeFalsy();
   });
@@ -70,8 +71,8 @@ describe("Gameboard class", () => {
     gameboard.receiveAttack([2, 3]);
     gameboard.resetBoard();
     expect(gameboard.board.flat().filter((cell) => cell != null).length).toBe(
-      0,
+      19,
     );
-    expect(gameboard.missedAttacks.length).toBe(0);
+    expect(gameboard.attackedCells.length).toBe(0);
   });
 });

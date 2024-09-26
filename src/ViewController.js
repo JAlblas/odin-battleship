@@ -15,7 +15,10 @@ class ViewController {
     this.startButton = document.querySelector("#start-button");
 
     this.startButton.addEventListener("click", () => {
-      console.log("restarting");
+      this.computerBoardModel.resetBoard();
+      this.playerBoardModel.resetBoard();
+      this.updateBoard(this.computerBoardModel, this.computerBoard);
+      this.updateBoard(this.playerBoardModel, this.playerBoard);
     });
 
     this.computerBoard = document.querySelector("#pc-board");
@@ -26,7 +29,6 @@ class ViewController {
   }
 
   updateBoard(boardModel, boardUI) {
-    console.log("UPDATING ", boardModel.playerType);
     boardUI.innerHTML = "";
     boardModel.board.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
@@ -41,7 +43,7 @@ class ViewController {
           } else if (cell == "hit") {
             playerCell.innerHTML = "Hit";
           } else {
-            if (boardModel.playerType == "player") {
+            if (boardModel.playerType == "human") {
               playerCell.innerHTML = "S";
             }
           }
@@ -55,7 +57,6 @@ class ViewController {
             const column = playerCell.dataset.column;
             console.log(row, column);
             if (boardModel.receiveAttack([row, column])) {
-              console.log("valid attack");
               Player.togglePlayer();
 
               setTimeout(
