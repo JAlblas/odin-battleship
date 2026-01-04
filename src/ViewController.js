@@ -55,7 +55,6 @@ class ViewController {
           playerCell.addEventListener("click", (e) => {
             const row = playerCell.dataset.row;
             const column = playerCell.dataset.column;
-            console.log(row, column);
             if (boardModel.receiveAttack([row, column])) {
               Player.togglePlayer();
 

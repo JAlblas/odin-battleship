@@ -7,9 +7,6 @@ export default class Ship {
   hit() {
     if (this.hits < this.size) {
       this.hits += 1;
-      if (this.isSunk()) {
-        console.log("SUNK");
-      }
     }
   }
 

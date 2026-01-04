@@ -23,7 +23,6 @@ export default class Gameboard {
     if (shipDirection === "horizontal") {
       if (startY + ship.size > this.size || startX >= this.size) {
         // Check if ship would go out of bounds horizontally
-        console.log("Ship out of bounds horizontally");
         return false;
       }
 
@@ -31,14 +30,12 @@ export default class Gameboard {
       for (let yCoord = startY; yCoord < startY + ship.size; yCoord++) {
         // Check if space is already occupied
         if (this.board[startX][yCoord] !== null) {
-          console.log("Space already occupied");
           return false;
         }
       }
     } else if (shipDirection === "vertical") {
       if (startX + ship.size > this.size || startY >= this.size) {
         // Check if ship would go out of bounds vertically
-        console.log("Ship out of bounds vertically");
         return false;
       }
 
@@ -46,12 +43,10 @@ export default class Gameboard {
       for (let xCoord = startX; xCoord < startX + ship.size; xCoord++) {
         // Check if space is already occupied
         if (this.board[xCoord][startY] !== null) {
-          console.log("Space already occupied");
           return false;
         }
       }
     } else {
-      console.log("Invalid direction");
       return false; // Invalid direction
     }
 
@@ -61,7 +56,6 @@ export default class Gameboard {
 
   placeShip(ship, shipDirection, startCoord) {
     if (!this.canPlaceShip(ship, shipDirection, startCoord)) {
-      console.log("ship can't be placed", ship.size, startCoord);
       return false; // Ship cannot be placed
     }
 
@@ -82,6 +76,7 @@ export default class Gameboard {
 
   receiveAttack(coord) {
     const [x, y] = coord;
+
     // Check if the coordinates are within bounds
     if (x < 0 || x >= this.board.length || y < 0 || y >= this.board[0].length) {
       throw new Error("Coordinates out of bounds");
@@ -100,7 +95,6 @@ export default class Gameboard {
         this.board[x][y] == "miss" ||
         this.board[x][y] == "X"
       ) {
-        console.log("INVALID SHOT");
         return false;
       } else {
         this.board[x][y] = "miss";
@@ -132,9 +126,7 @@ export default class Gameboard {
       }
 
       if (!placed) {
-        console.log(
-          `Failed to place ship of size ${ship.size} after ${maxAttempts} attempts`,
-        );
+        continue;
       }
     }
   }
@@ -147,9 +139,6 @@ export default class Gameboard {
   }
 
   makeEnemyMove(playerBoard) {
-    console.log(playerBoard);
-    console.log("Enemy shooting!");
-
     let row, column;
 
     // Keep trying to make move until valid move is found
@@ -164,7 +153,6 @@ export default class Gameboard {
 
   isGameOver() {
     // Implement the logic for game over
-    console.log(this.ships);
     return this.ships.every((ship) => ship.isSunk());
   }
 
