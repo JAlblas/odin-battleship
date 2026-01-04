@@ -1,6 +1,6 @@
-const Ship = require("./Ship");
+import Ship from "./Ship";
 
-class Gameboard {
+export default class Gameboard {
   constructor(size, playerType) {
     this.size = size;
     this.board = Array(size) // size is used here instead of fixed 10
@@ -186,5 +186,3 @@ class Gameboard {
     ]);
   }
 }
-
-module.exports = Gameboard;

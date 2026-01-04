@@ -1,4 +1,4 @@
-class Ship {
+export default class Ship {
   constructor(size) {
     this.size = size;
     this.hits = 0;
@@ -17,5 +17,3 @@ class Ship {
     return this.hits >= this.size;
   }
 }
-
-module.exports = Ship;

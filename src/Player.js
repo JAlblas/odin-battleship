@@ -1,4 +1,4 @@
-class Player {
+export default class Player {
   constructor(type, board) {
     this.type = type;
     this.board = board;
@@ -31,5 +31,3 @@ class Player {
     this.board.randomlyPlaceShips(ships);
   }
 }
-
-module.exports = Player;
